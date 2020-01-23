@@ -8,6 +8,19 @@ class Monster
   end
 end
 
+def mainphase(hands)
+  puts "----------------------------"
+  hands.each_with_index do |hand, i|
+    puts "手札#{i + 1}: #{hand.name}"
+  end
+  puts "----------------------------"
+  puts "どちらを召喚しますか?"
+  puts "手札1:[1]\n手札2:[2]"
+  input = gets.to_i
+  summon(hands, input)
+  puts "バトルフェイズに進みます"
+end
+
 def summon(hands, input)
   puts "#{hands[input - 1].name}を召喚!"
 end
@@ -18,14 +31,5 @@ card2 = Monster.new(monsters[1])
 hands = []
 hands << card1
 hands << card2
-puts "----------------------------"
-hands.each_with_index do |hand, i|
-  puts "手札#{i + 1}: #{hand.name}"
-end
-# puts "手札1: #{hands[0].name}\n手札2: #{hands[1].name}"
-puts "----------------------------"
-# puts "どちらを召喚しますか?"
-# puts "手札1:[1]\n手札2:[2]"
-# input = gets.to_i
-# summon(hands, input)
+mainphase(hands)
 
