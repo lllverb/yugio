@@ -9,22 +9,30 @@ $enemyhands << enemycard1
 $enemyhands << enemycard2
 $enemyhands << enemycard3
 def enemymainphase(enemyhands, enemyfield)
-  puts "------相手のメインフェイズ------"
+  puts "\n<相手のメインフェイズ>"
   enemysummon(enemyhands, enemyfield)
   puts "バトルフェイズに進みます"
 end
 
 def enemysummon(enemyhands, enemyfield)
   input = rand(enemyhands.length()) - 1
-  sleep(1)
+  sleep(0.5)
   enemyfield << enemyhands[input]
   puts "#{enemyhands[input].name}を召喚しました。"
+  sleep(0.5)
   enemyhands.delete_at(input)
 end
 
 def enemybattlephase(enemyhands, enemyfield)
-  puts "--------バトルフェイズ--------"
+  puts "\n<バトルフェイズ>"
   enemyfield.each_with_index do |f, i|
     puts "#{i + 1}.#{f.name}: 攻撃力#{f.attack}"
   end
+end
+
+def enemyendphase(turncount)
+  puts "-------------------------------------"
+  puts "------相手のターンを終了します-------"
+  puts "-------------------------------------"
+  $turncount = turncount + 1
 end

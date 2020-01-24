@@ -10,10 +10,3 @@ class Monster
     @star = params[:star]
   end
 end
-
-def endphase(turncount)
-  puts "----------------------------"
-  puts "ターンを終了します"
-  puts "----------------------------"
-  $turncount = turncount + 1
-end

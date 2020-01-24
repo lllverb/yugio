@@ -1,8 +1,12 @@
-require "./common"
-require "./myturn"
-require "./enemy"
 monsters = [{name: "砦を守る翼竜", attack: 1400, defense: 1200, star: 4}, {name: "デーモンの召喚", attack: 2500, defense: 1200, star: 6}, {name: "ブルーアイズホワイトドラゴン", attack: 3000, defense: 2500, star: 8}]
-
+card1 = Monster.new(monsters[0])
+card2 = Monster.new(monsters[1])
+card3 = Monster.new(monsters[2])
+$hands = []
+$field = []
+$hands << card1
+$hands << card2
+$hands << card3
 def drawphase
   puts "\n俺のターン、ドロー!"
 end
@@ -50,27 +54,4 @@ def endphase(turncount)
   puts "------自分のターンを終了します-------"
   puts "-------------------------------------"
   $turncount = turncount + 1
-end
-
-card1 = Monster.new(monsters[0])
-card2 = Monster.new(monsters[1])
-card3 = Monster.new(monsters[2])
-hands = []
-field = []
-hands << card1
-hands << card2
-hands << card3
-while $turncount < 5 do
-  if $turncount % 2 == 1
-    if $turncount != 1
-      drawphase()
-    end
-    mainphase($hands, $field)
-    battlephase($hands, $field, $enbemyfield)
-    endphase($turncount)
-  else
-    enemymainphase($enemyhands, $enemyfield)
-    enemybattlephase($enemyhands, $enemyfield)
-    enemyendphase($turncount)
-  end
 end
