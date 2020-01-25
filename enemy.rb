@@ -1,4 +1,5 @@
 require "./common"
+require "pp"
 enemymonsters = [{name: "エルフの剣士", attack: 1400, defense: 1200, star: 4}, {name: "ホーリーエルフ", attack: 800, defense: 2000, star: 6}, {name: "レッドアイズブラックドラゴン", attack: 2400, defense: 2000, star: 7}]
 enemycard1 = Monster.new(enemymonsters[0])
 enemycard2 = Monster.new(enemymonsters[1])
@@ -24,24 +25,40 @@ end
 
 
 def enemybattlephase()
-  puts "バトルフェイズに進みます"
-  puts "\n<バトルフェイズ>"
-  puts "-----自分フィールド-----"
-  $field.each_with_index do |f, i|
-    puts "#{i + 1}.#{f.name}: 攻撃力#{f.attack}"
-  end
-  if $enemyfield.length() != 0
-    puts "-----相手フィールド-----"
-    $enemyfield.each_with_index do |ef, i|
-      puts "#{i + 1}.#{ef.name}: 攻撃力#{ef.attack}"
+  enemymaxattack = 0
+  $enemyfield.each {|e|
+    if e.attack > enemymaxattack
+      enemymaxattack = e.attack
     end
+  }
+  maxattack = 0 
+  $field.each {|e|
+    if e.attack > maxattack
+      maxattack = e.attack
+    end
+  }
+  if enemymaxattack > maxattack
+    puts "バトルフェイズに進みます"
+    puts "\n<バトルフェイズ>"
+    puts "-----自分フィールド-----"
+    $field.each_with_index do |f, i|
+      puts "#{i + 1}.#{f.name}: 攻撃力#{f.attack}"
+    end
+    if $enemyfield.length() != 0
+      puts "-----相手フィールド-----"
+      $enemyfield.each_with_index do |ef, i|
+        puts "#{i + 1}.#{ef.name}: 攻撃力#{ef.attack}"
+      end
+    end
+    # 攻撃するモンスターを選択//////////////
+    attackernumber = rand($enemyfield.length())
+    attacker = $enemyfield[attackernumber]
+    targetnumber = rand($field.length())
+    target = $field[targetnumber]
+    puts "#{attacker.name}\nVS\n#{target.name}"
+    damagestep(target, attacker, attackernumber, targetnumber)
+    # 攻撃するモンスターを選択//////////////
+  else
+    puts "バトルフェイズをスキップした"
   end
-  # 攻撃するモンスターを選択//////////////
-  attackernumber = rand($enemyfield.length())
-  attacker = $enemyfield[attackernumber]
-  targetnumber = rand($field.length())
-  target = $field[targetnumber]
-  puts "#{attacker.name}\nVS\n#{target.name}"
-  damagestep(target, attacker, attackernumber, targetnumber)
-  # 攻撃するモンスターを選択//////////////
 end
